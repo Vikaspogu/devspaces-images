@@ -6,18 +6,6 @@ However, there is one challenge we have to deal with when working in this mode -
 
 A better experience could be just taking our existing application runtime images, and layering on top a standard set of developer tools to produce developer-optimized versions of our production images.
 
-## Images
-
-This repo automatically publishes the following images that are available to use in Dev Spaces:
-
-- quay.io/redhat-cop/devspaces-base:latest
-- quay.io/redhat-cop/devspaces-openjdk-17:latest
-- quay.io/redhat-cop/devspaces-nodejs-18:latest
-- quay.io/redhat-cop/devspaces-nodejs-20:latest
-- quay.io/redhat-cop/devspaces-java-node-combined:latest
-- quay.io/redhat-cop/devspaces-nested-podman:latest
-- quay.io/redhat-cop/cekit-builder:latest
-
 ## Developer-optimized container images using CEkit
 
 [CEkit](https://cekit.io) is a modular, YAML-based framework for generating Containerfile-driven images that can be built using Docker, Podman or Buildah. To acheive our developer-optimized image builds, we're going to use a 3 layered approach:
@@ -42,22 +30,6 @@ cekit build podman
 
 The developer base image is defined in the `image.yaml` file which is automatically picked up by CEkit. The `image.yaml` defines the name, version (tag), base image and modules that will be used to compose the image.
 
-## Using Overrides to inject language images
-
-CEKit also supports [overrides](https://docs.cekit.io/en/latest/handbook/overrides.html). Overrides allow you to modify certain parts of a build to produce slightly different variations of an image without defining a completely separate build. For our purposes, we're going to use overrides to inject an alternate language image as our FROM image.
-
-To build a Java OpenJDK 17 version of our image, we can run:
-
-```
-cekit build --overrides images/devspaces-openjdk-17.yaml podman
-```
-
-To build a NodeJS 18 image, run:
-
-```
-cekit build --overrides images/devspaces-nodejs-18.yaml podman
-```
-
 ## Need a Containerfile? You Got it!
 
 If you still have a need or desire to provide a raw Containerfile for people to build, CEkit has you covered there too. In addition to the build image, the `cekit build` command also outputs the full source for the image, including a generated containerfile, which can be built directly usin Docker, Podman or Buildah. For example, after running the NodeJS example above, I can also run:
@@ -68,17 +40,3 @@ podman build -t nodejs-containerfile target/image
 ```
 
 This is useful for supporting a mixed mode where you want to have a streamlined CI process for producing images for your project, but would also like to make it easy for consumers of your project to build the images themselves without extra tooling.
-
-
-## Quick Commands to build images locally
-
-```bash
-cekit build --overrides images/cekit-builder.yaml podman
-cekit build --overrides images/devspaces-base.yaml podman
-cekit build --overrides images/devspaces-openjdk-17.yaml podman
-cekit build --overrides images/devspaces-nodejs-18.yaml podman
-cekit build --overrides images/devspaces-nodejs-20.yaml podman
-cekit build --overrides images/devspaces-java-node-combined.yaml podman
-cekit build --overrides images/devspaces-nested-podman.yaml podman
-cekit build --overrides images/devspaces-python-311.yaml podman
-```

@@ -8,7 +8,6 @@ packages:
   manager_flags: "--disableplugin=subscription-manager --setopt=tsflags=nodocs --setopt=install_weak_deps=0"
   install:
   - buildah
-  - compat-openssl11
   - diffutils
   - fuse-overlayfs
   - gcc

@@ -1,0 +1,28 @@
+# This is an image descriptor for CEkit
+
+schema_version: 1
+
+from: "quay.io/devspaces/ansible-creator-ee@sha256:c94db4c57a7e4431e7a43a2ac80d4b638f4f12e736d8ba9af739406218e5f57b"
+name: &name "ansible-creator-ee"
+version: &version "1.1"
+description: "Developer base image for Red Hat OpenShift Dev Spaces"
+
+envs:
+- name: WORK_DIR
+  value: /projects
+- name: BUILDAH_ISOLATION
+  value: chroot
+- name: HOME
+  value: /home/user
+
+packages:
+  manager: microdnf
+
+modules:
+  repositories:
+  - path: "../modules"
+  install:
+  - name: developer-base
+  - name: custom-tooling
+  - name: openshift-tools
+  - name: yq
