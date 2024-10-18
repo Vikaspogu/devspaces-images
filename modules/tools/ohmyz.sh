@@ -8,5 +8,5 @@ echo "setopt PROMPT_CR" >> $HOME/.zshrc && \
 echo "setopt PROMPT_SP" >> $HOME/.zshrc && \
 echo "export PROMPT_EOL_MARK=\"\"" >> $HOME/.zshrc && \
 echo "😎😎😎😎😎" && \
-git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions && \
-sed -i 's/^plugin=.*/plugin=(git zsh-autosuggestions)/' $HOME/.zshrc
+git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/plugins/zsh-autosuggestions && \
+sed -i 's/^plugins=.*/plugins=(git zsh-autosuggestions)/' $HOME/.zshrc

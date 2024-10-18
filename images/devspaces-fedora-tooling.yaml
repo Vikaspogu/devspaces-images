@@ -1,0 +1,17 @@
+name: devspaces-fedora40-tooling
+from: quay.io/fedora/fedora:40
+version: 2.0.0
+
+packages:
+  manager: dnf
+  manager_flags: "--setopt=tsflags=nodocs --setopt=install_weak_deps=0"
+  
+modules:
+  repositories:
+  - path: "../modules"
+  install:
+  - name: developer-base
+  - name: custom-tooling
+  - name: openshift-tools
+  - name: yq
+  - name: pre-commit
